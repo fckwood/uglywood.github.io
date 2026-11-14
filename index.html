@@ -11,8 +11,8 @@
     --bg3: #331e5c;
     --text: #ede7f6;
     --muted: #a99bc4;
-    --card: rgba(255, 255, 255, 0.04);
-    --card-border: rgba(180, 140, 255, 0.15);
+    --card: rgba(255, 255, 255, 0.06);
+    --card-border: rgba(180, 140, 255, 0.2);
     --accent: #b48cff;
   }
 
@@ -27,7 +27,7 @@
     overflow-x: hidden;
   }
 
-  /* Мягкое свечение на фоне */
+  /* Фоновые пятна */
   body::before, body::after {
     content: "";
     position: fixed;
@@ -37,20 +37,21 @@
     z-index: 0;
     pointer-events: none;
   }
-  body::before {
-    width: 450px; height: 450px;
-    background: #6a3fc4;
-    top: -150px; left: -150px;
-  }
-  body::after {
-    width: 500px; height: 500px;
-    background: #4a2d8a;
-    bottom: -200px; right: -180px;
+  body::before { width: 450px; height: 450px; background: #6a3fc4; top: -150px; left: -150px; }
+  body::after { width: 500px; height: 500px; background: #4a2d8a; bottom: -200px; right: -180px; }
+
+  /* Канвас для частиц */
+  #particle-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none;
   }
 
   .wrap {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     max-width: 440px;
     margin: 0 auto;
     padding: 50px 24px 60px;
@@ -60,7 +61,6 @@
     gap: 20px;
   }
 
-  /* Верхняя панель с часами */
   .top-bar {
     width: 100%;
     display: flex;
@@ -78,12 +78,10 @@
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background-image: url('avatar.jpg'); 
+    background-image: url('avatar.jpg'); /* Твоя загруженная картинка */
     background-size: cover;
     background-position: center;
-    box-shadow:
-      0 0 0 3px rgba(180, 140, 255, 0.2),
-      0 0 35px rgba(140, 90, 230, 0.6);
+    box-shadow: 0 0 0 3px rgba(180, 140, 255, 0.2), 0 0 35px rgba(140, 90, 230, 0.6);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
   }
@@ -92,6 +90,11 @@
     box-shadow: 0 0 0 4px rgba(180, 140, 255, 0.4), 0 0 50px rgba(140, 90, 230, 0.8);
   }
 
+  /* Глитч-эффект для ника */
+  .nick-container {
+    position: relative;
+    margin-top: 5px;
+  }
   .nick {
     font-size: 28px;
     font-weight: 700;
@@ -100,7 +103,46 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    margin-top: 5px;
+    position: relative;
+    z-index: 2;
+  }
+  .nick::before, .nick::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    opacity: 0;
+    z-index: 1;
+  }
+  .nick::before { color: #00fffc; transform: translate(-2px, -1px); }
+  .nick::after { color: #fc00ff; transform: translate(2px, 1px); }
+  .nick-container:hover .nick::before {
+    opacity: 0.7;
+    animation: glitch-anim-1 0.3s infinite linear alternate-reverse;
+  }
+  .nick-container:hover .nick::after {
+    opacity: 0.7;
+    animation: glitch-anim-2 0.3s infinite linear alternate-reverse;
+  }
+  @keyframes glitch-anim-1 {
+    0% { transform: translate(-2px, -1px); }
+    20% { transform: translate(1px, 2px); }
+    40% { transform: translate(-1px, -2px); }
+    60% { transform: translate(2px, 1px); }
+    80% { transform: translate(-2px, 2px); }
+    100% { transform: translate(1px, -1px); }
+  }
+  @keyframes glitch-anim-2 {
+    0% { transform: translate(2px, 1px); }
+    20% { transform: translate(-1px, -2px); }
+    40% { transform: translate(2px, 2px); }
+    60% { transform: translate(-2px, 1px); }
+    80% { transform: translate(1px, -1px); }
+    100% { transform: translate(-1px, 2px); }
   }
 
   /* Ссылки */
@@ -112,6 +154,7 @@
     margin-top: 10px;
   }
 
+  /* Стеклянный эффект */
   .btn {
     position: relative;
     display: flex;
@@ -124,26 +167,25 @@
     color: var(--text);
     background: var(--card);
     border: 1px solid var(--card-border);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     overflow: hidden;
     transition: transform 0.2s ease, border-color 0.2s, box-shadow 0.25s;
     cursor: pointer;
   }
-
   .btn::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(180, 140, 255, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(180, 140, 255, 0.15), transparent);
     transform: translateX(-100%);
     transition: transform 0.6s ease;
   }
-
   .btn:hover {
     transform: translateY(-2px) scale(1.01);
-    border-color: rgba(180, 140, 255, 0.5);
-    box-shadow: 0 8px 25px rgba(110, 60, 190, 0.3);
+    border-color: rgba(180, 140, 255, 0.6);
+    box-shadow: 0 8px 30px rgba(110, 60, 190, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
   .btn:hover::before { transform: translateX(100%); }
 
@@ -154,18 +196,12 @@
     border-radius: 10px;
     display: grid;
     place-items: center;
-    background: rgba(180, 140, 255, 0.12);
+    background: rgba(180, 140, 255, 0.15);
     font-size: 18px;
   }
-
-  .btn .meta {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
+  .btn .meta { display: flex; flex-direction: column; gap: 2px; }
   .btn .name { font-weight: 600; font-size: 15px; }
   .btn .handle { font-size: 12px; color: var(--muted); }
-
   .btn .action {
     margin-left: auto;
     color: var(--accent);
@@ -174,7 +210,6 @@
   }
   .btn:hover .action { transform: translateX(3px); }
 
-  /* Кнопка копирования для дискорда */
   .copy-btn {
     background: none;
     border: none;
@@ -186,6 +221,22 @@
   }
   .copy-btn:hover { transform: scale(1.1); color: #fff; }
 
+  /* Плеер Spotify */
+  .spotify-player {
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+  .spotify-player iframe {
+    display: block;
+    width: 100%;
+    height: 352px; /* Чуть увеличил высоту, чтобы было видно треки */
+    border: none;
+  }
+
+  /* Анимация появления */
   .fade { opacity: 0; transform: translateY(15px); animation: appear 0.6s ease forwards; }
   @keyframes appear { to { opacity: 1; transform: translateY(0); } }
   .d1 { animation-delay: 0.1s; }
@@ -196,21 +247,23 @@
 </style>
 </head>
 <body>
+
+  <canvas id="particle-canvas"></canvas>
+
   <main class="wrap">
     
-    <!-- Часы -->
     <div class="top-bar fade d1">
       <span>LOCAL TIME</span>
       <span id="clock">00:00:00</span>
     </div>
 
-    <!-- Аватарка -->
-    <div class="avatar fade d1" title="Bladee - Cold Visions"></div>
+    <div class="avatar fade d1" title="uglywood"></div>
     
-    <h1 class="nick fade d2">uglywood</h1>
+    <div class="nick-container fade d2">
+      <h1 class="nick" data-text="uglywood">uglywood</h1>
+    </div>
 
     <nav class="links">
-      <!-- Instagram -->
       <a class="btn fade d3" href="https://www.instagram.com/uglywoodd?rpxt=MXU1YzBvcTVxZThrcg==" target="_blank" rel="noopener">
         <span class="icon">📸</span>
         <span class="meta">
@@ -220,7 +273,6 @@
         <span class="action">↗</span>
       </a>
 
-      <!-- Discord (с копированием) -->
       <div class="btn fade d4" onclick="copyDiscord()" title="Нажми, чтобы скопировать ник">
         <span class="icon">🎮</span>
         <span class="meta">
@@ -230,7 +282,6 @@
         <button class="copy-btn" id="copy-icon" title="Скопировать">📋</button>
       </div>
 
-      <!-- Steam -->
       <a class="btn fade d5" href="https://steamcommunity.com/profiles/76561199219638137/" target="_blank" rel="noopener">
         <span class="icon">🕹️</span>
         <span class="meta">
@@ -241,10 +292,21 @@
       </a>
     </nav>
 
+    <!-- Блок Spotify -->
+    <div class="spotify-player fade d5">
+      <!-- Сюда автоматически подставится твой ID через скрипт -->
+      <iframe 
+        id="spotify-embed"
+        src="" 
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+        loading="lazy">
+      </iframe>
+    </div>
+
   </main>
 
   <script>
-    // Часы
+    // --- Часы ---
     function updateClock() {
       const now = new Date();
       const timeString = now.toLocaleTimeString('ru-RU', { hour12: false });
@@ -253,7 +315,7 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Копирование Discord
+    // --- Копирование Discord ---
     function copyDiscord() {
       const nick = "uglywood";
       navigator.clipboard.writeText(nick).then(() => {
@@ -264,6 +326,81 @@
         console.error('Ошибка копирования: ', err);
       });
     }
+
+    // --- Spotify Плеер ---
+    // Твой ID артиста, извлеченный из ссылки
+    const spotifyArtistId = "242O80W0kyOyzLAZ7D0m37"; 
+    
+    if (spotifyArtistId) {
+      // Подгружаем виджет артиста. theme=0 означает темную тему.
+      document.getElementById('spotify-embed').src = `https://open.spotify.com/embed/artist/${spotifyArtistId}?utm_source=generator&theme=0`;
+    }
+
+    // --- Интерактивные частицы на фоне ---
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: -1000, y: -1000 };
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      // Создаем частицу при движении
+      if (Math.random() > 0.4) {
+        particles.push(new Particle(mouse.x, mouse.y));
+      }
+    });
+
+    class Particle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.vx = (Math.random() - 0.5) * 2;
+        this.vy = (Math.random() - 0.5) * 2;
+        this.size = Math.random() * 2 + 1;
+        this.life = 1.0;
+        this.decay = Math.random() * 0.02 + 0.01;
+        this.color = `hsla(${260 + Math.random() * 40}, 80%, 70%, `;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.life -= this.decay;
+        this.size *= 0.98;
+      }
+      draw() {
+        ctx.fillStyle = this.color + this.life + ')';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      for (let i = particles.length - 1; i >= 0; i--) {
+        let p = particles[i];
+        p.update();
+        p.draw();
+        if (p.life <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+      
+      if (particles.length > 300) {
+        particles.splice(0, particles.length - 300);
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
   </script>
 </body>
 </html>
