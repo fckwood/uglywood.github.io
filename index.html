@@ -3,18 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>uglywood — links</title>
+<title>uglywood</title>
 <style>
   :root {
-    --bg1: #1a1025;
-    --bg2: #2b1b4a;
-    --bg3: #3d2468;
-    --accent: #b48cff;
-    --accent-soft: #8f6fd6;
+    --bg1: #120c1c;
+    --bg2: #21143b;
+    --bg3: #331e5c;
     --text: #ede7f6;
     --muted: #a99bc4;
-    --card: rgba(255, 255, 255, 0.06);
-    --card-border: rgba(180, 140, 255, 0.18);
+    --card: rgba(255, 255, 255, 0.04);
+    --card-border: rgba(180, 140, 255, 0.15);
+    --accent: #b48cff;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,12 +22,12 @@
     min-height: 100%;
     font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
     color: var(--text);
-    background: linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 45%, var(--bg3) 100%);
+    background: linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
     background-attachment: fixed;
     overflow-x: hidden;
   }
 
-  /* мягкие светящиеся пятна на фоне */
+  /* Мягкое свечение на фоне */
   body::before, body::after {
     content: "";
     position: fixed;
@@ -39,12 +38,12 @@
     pointer-events: none;
   }
   body::before {
-    width: 480px; height: 480px;
-    background: #7a4dd6;
-    top: -160px; left: -160px;
+    width: 450px; height: 450px;
+    background: #6a3fc4;
+    top: -150px; left: -150px;
   }
   body::after {
-    width: 520px; height: 520px;
+    width: 500px; height: 500px;
     background: #4a2d8a;
     bottom: -200px; right: -180px;
   }
@@ -52,85 +51,65 @@
   .wrap {
     position: relative;
     z-index: 1;
-    max-width: 480px;
+    max-width: 440px;
     margin: 0 auto;
-    padding: 56px 24px 64px;
+    padding: 50px 24px 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 18px;
+    gap: 20px;
   }
 
-  /* аватар */
+  /* Верхняя панель с часами */
+  .top-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: monospace;
+    letter-spacing: 1px;
+    margin-bottom: -10px;
+  }
+
+  /* Аватарка */
   .avatar {
-    width: 112px;
-    height: 112px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    display: grid;
-    place-items: center;
-    font-size: 42px;
-    font-weight: 800;
-    letter-spacing: -1px;
-    color: #f4eeff;
-    background: linear-gradient(135deg, #6a3fc4, #b48cff);
+    background-image: url('https://avatars.yandex.net/get-music-content/11455850/6b3db860.a.30932397-1/m1000x1000'); /* Обложка Bladee - Cold Visions */
+    background-size: cover;
+    background-position: center;
     box-shadow:
-      0 0 0 4px rgba(180, 140, 255, 0.15),
-      0 0 40px rgba(140, 90, 230, 0.55);
-    animation: float 6s ease-in-out infinite;
+      0 0 0 3px rgba(180, 140, 255, 0.2),
+      0 0 35px rgba(140, 90, 230, 0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
   }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-8px); }
+  .avatar:hover {
+    transform: scale(1.05) rotate(3deg);
+    box-shadow: 0 0 0 4px rgba(180, 140, 255, 0.4), 0 0 50px rgba(140, 90, 230, 0.8);
   }
 
   .nick {
-    font-size: 30px;
+    font-size: 28px;
     font-weight: 700;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     background: linear-gradient(90deg, #e6d9ff, #b48cff, #8f6fd6);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    margin-top: 5px;
   }
 
-  .tag {
-    font-size: 14px;
-    color: var(--muted);
-    margin-top: -8px;
-    text-align: center;
-    line-height: 1.5;
-  }
-
-  /* маленькие «детальки» */
-  .chips {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 4px 0 10px;
-  }
-  .chip {
-    font-size: 12px;
-    padding: 5px 12px;
-    border-radius: 999px;
-    background: rgba(180, 140, 255, 0.10);
-    border: 1px solid rgba(180, 140, 255, 0.22);
-    color: #cbb8f0;
-    transition: transform 0.2s, background 0.2s;
-  }
-  .chip:hover {
-    transform: translateY(-2px);
-    background: rgba(180, 140, 255, 0.20);
-  }
-
-  /* кнопки соцсетей */
+  /* Ссылки */
   .links {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-top: 8px;
+    margin-top: 10px;
   }
 
   .btn {
@@ -139,7 +118,7 @@
     align-items: center;
     gap: 14px;
     width: 100%;
-    padding: 15px 20px;
+    padding: 14px 20px;
     border-radius: 16px;
     text-decoration: none;
     color: var(--text);
@@ -148,35 +127,35 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     overflow: hidden;
-    transition: transform 0.18s ease, border-color 0.18s, box-shadow 0.25s;
+    transition: transform 0.2s ease, border-color 0.2s, box-shadow 0.25s;
+    cursor: pointer;
   }
 
   .btn::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(180, 140, 255, 0.14), transparent);
+    background: linear-gradient(90deg, transparent, rgba(180, 140, 255, 0.1), transparent);
     transform: translateX(-100%);
-    transition: transform 0.55s ease;
+    transition: transform 0.6s ease;
   }
 
   .btn:hover {
-    transform: translateY(-3px) scale(1.01);
-    border-color: rgba(180, 140, 255, 0.55);
-    box-shadow: 0 10px 30px rgba(110, 60, 190, 0.35);
+    transform: translateY(-2px) scale(1.01);
+    border-color: rgba(180, 140, 255, 0.5);
+    box-shadow: 0 8px 25px rgba(110, 60, 190, 0.3);
   }
   .btn:hover::before { transform: translateX(100%); }
-  .btn:active { transform: translateY(-1px) scale(0.99); }
 
   .btn .icon {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     flex-shrink: 0;
     border-radius: 10px;
     display: grid;
     place-items: center;
-    background: rgba(180, 140, 255, 0.14);
-    font-size: 19px;
+    background: rgba(180, 140, 255, 0.12);
+    font-size: 18px;
   }
 
   .btn .meta {
@@ -187,119 +166,104 @@
   .btn .name { font-weight: 600; font-size: 15px; }
   .btn .handle { font-size: 12px; color: var(--muted); }
 
-  .btn .arrow {
+  .btn .action {
     margin-left: auto;
-    color: var(--accent-soft);
+    color: var(--accent);
     font-size: 18px;
     transition: transform 0.2s;
   }
-  .btn:hover .arrow { transform: translateX(4px); }
+  .btn:hover .action { transform: translateX(3px); }
 
-  /* подвал */
-  .footer {
-    margin-top: 26px;
-    font-size: 12px;
-    color: var(--muted);
-    text-align: center;
-    line-height: 1.7;
+  /* Кнопка копирования для дискорда */
+  .copy-btn {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.2s, color 0.2s;
   }
-  .footer .dot {
-    display: inline-block;
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: #7ee787;
-    box-shadow: 0 0 8px #7ee787;
-    margin-right: 6px;
-    vertical-align: middle;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50%      { opacity: 0.3; }
-  }
+  .copy-btn:hover { transform: scale(1.1); color: #fff; }
 
-  /* появление при загрузке */
-  .fade {
-    opacity: 0;
-    transform: translateY(14px);
-    animation: appear 0.6s ease forwards;
-  }
-  @keyframes appear {
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .d1 { animation-delay: 0.05s; }
-  .d2 { animation-delay: 0.15s; }
-  .d3 { animation-delay: 0.25s; }
-  .d4 { animation-delay: 0.35s; }
-  .d5 { animation-delay: 0.45s; }
-  .d6 { animation-delay: 0.55s; }
+  .fade { opacity: 0; transform: translateY(15px); animation: appear 0.6s ease forwards; }
+  @keyframes appear { to { opacity: 1; transform: translateY(0); } }
+  .d1 { animation-delay: 0.1s; }
+  .d2 { animation-delay: 0.2s; }
+  .d3 { animation-delay: 0.3s; }
+  .d4 { animation-delay: 0.4s; }
+  .d5 { animation-delay: 0.5s; }
 </style>
 </head>
 <body>
   <main class="wrap">
-    <div class="avatar fade d1">u</div>
-
-    <h1 class="nick fade d2">uglywood</h1>
-    <p class="tag fade d2">digital forest · тихий уголок интернета</p>
-
-    <div class="chips fade d3">
-      <span class="chip">🌙 night owl</span>
-      <span class="chip">🎧 lofi</span>
-      <span class="chip">🎮 gamer</span>
-      <span class="chip">✨ vibes</span>
+    
+    <!-- Часы -->
+    <div class="top-bar fade d1">
+      <span>LOCAL TIME</span>
+      <span id="clock">00:00:00</span>
     </div>
 
+    <!-- Аватарка -->
+    <div class="avatar fade d1" title="Bladee - Cold Visions"></div>
+    
+    <h1 class="nick fade d2">uglywood</h1>
+
     <nav class="links">
-      <a class="btn fade d4" href="https://t.me/" target="_blank" rel="noopener">
-        <span class="icon">✈️</span>
+      <!-- Instagram -->
+      <a class="btn fade d3" href="https://www.instagram.com/uglywoodd?rpxt=MXU1YzBvcTVxZThrcg==" target="_blank" rel="noopener">
+        <span class="icon">📸</span>
         <span class="meta">
-          <span class="name">Telegram</span>
-          <span class="handle">@uglywood</span>
+          <span class="name">Instagram</span>
+          <span class="handle">@uglywoodd</span>
         </span>
-        <span class="arrow">→</span>
+        <span class="action">↗</span>
       </a>
 
-      <a class="btn fade d4" href="https://discord.com/" target="_blank" rel="noopener">
+      <!-- Discord (с копированием) -->
+      <div class="btn fade d4" onclick="copyDiscord()" title="Нажми, чтобы скопировать ник">
         <span class="icon">🎮</span>
         <span class="meta">
           <span class="name">Discord</span>
-          <span class="handle">uglywood</span>
+          <span class="handle" id="discord-nick">uglywood</span>
         </span>
-        <span class="arrow">→</span>
-      </a>
+        <button class="copy-btn" id="copy-icon" title="Скопировать">📋</button>
+      </div>
 
-      <a class="btn fade d5" href="https://github.com/" target="_blank" rel="noopener">
-        <span class="icon">🐙</span>
+      <!-- Steam -->
+      <a class="btn fade d5" href="https://steamcommunity.com/profiles/76561199219638137/" target="_blank" rel="noopener">
+        <span class="icon">🕹️</span>
         <span class="meta">
-          <span class="name">GitHub</span>
-          <span class="handle">github.com/uglywood</span>
+          <span class="name">Steam</span>
+          <span class="handle">profile</span>
         </span>
-        <span class="arrow">→</span>
-      </a>
-
-      <a class="btn fade d5" href="https://open.spotify.com/" target="_blank" rel="noopener">
-        <span class="icon">🎵</span>
-        <span class="meta">
-          <span class="name">Spotify</span>
-          <span class="handle">плейлисты для ночи</span>
-        </span>
-        <span class="arrow">→</span>
-      </a>
-
-      <a class="btn fade d6" href="https://www.youtube.com/" target="_blank" rel="noopener">
-        <span class="icon">▶️</span>
-        <span class="meta">
-          <span class="name">YouTube</span>
-          <span class="handle">видео и стримы</span>
-        </span>
-        <span class="arrow">→</span>
+        <span class="action">↗</span>
       </a>
     </nav>
 
-    <p class="footer fade d6">
-      <span class="dot"></span>на связи почти всегда<br>
-      сделано с фиолетовым настроением 💜
-    </p>
   </main>
+
+  <script>
+    // Часы
+    function updateClock() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString('ru-RU', { hour12: false });
+      document.getElementById('clock').textContent = timeString;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Копирование Discord
+    function copyDiscord() {
+      const nick = "uglywood";
+      navigator.clipboard.writeText(nick).then(() => {
+        const icon = document.getElementById('copy-icon');
+        icon.textContent = '✅';
+        setTimeout(() => { icon.textContent = '📋'; }, 1500);
+      }).catch(err => {
+        console.error('Ошибка копирования: ', err);
+      });
+    }
+  </script>
 </body>
 </html>
