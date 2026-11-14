@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>uglywood — links</title>
+<style>
+  :root {
+    --bg1: #1a1025;
+    --bg2: #2b1b4a;
+    --bg3: #3d2468;
+    --accent: #b48cff;
+    --accent-soft: #8f6fd6;
+    --text: #ede7f6;
+    --muted: #a99bc4;
+    --card: rgba(255, 255, 255, 0.06);
+    --card-border: rgba(180, 140, 255, 0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    min-height: 100%;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text);
+    background: linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 45%, var(--bg3) 100%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+  }
+
+  /* мягкие светящиеся пятна на фоне */
+  body::before, body::after {
+    content: "";
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.35;
+    z-index: 0;
+    pointer-events: none;
+  }
+  body::before {
+    width: 480px; height: 480px;
+    background: #7a4dd6;
+    top: -160px; left: -160px;
+  }
+  body::after {
+    width: 520px; height: 520px;
+    background: #4a2d8a;
+    bottom: -200px; right: -180px;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 56px 24px 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  /* аватар */
+  .avatar {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: #f4eeff;
+    background: linear-gradient(135deg, #6a3fc4, #b48cff);
+    box-shadow:
+      0 0 0 4px rgba(180, 140, 255, 0.15),
+      0 0 40px rgba(140, 90, 230, 0.55);
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+
+  .nick {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #e6d9ff, #b48cff, #8f6fd6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .tag {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: -8px;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  /* маленькие «детальки» */
+  .chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 4px 0 10px;
+  }
+  .chip {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: rgba(180, 140, 255, 0.10);
+    border: 1px solid rgba(180, 140, 255, 0.22);
+    color: #cbb8f0;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .chip:hover {
+    transform: translateY(-2px);
+    background: rgba(180, 140, 255, 0.20);
+  }
+
+  /* кнопки соцсетей */
+  .links {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 15px 20px;
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    overflow: hidden;
+    transition: transform 0.18s ease, border-color 0.18s, box-shadow 0.25s;
+  }
+
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(180, 140, 255, 0.14), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.55s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-3px) scale(1.01);
+    border-color: rgba(180, 140, 255, 0.55);
+    box-shadow: 0 10px 30px rgba(110, 60, 190, 0.35);
+  }
+  .btn:hover::before { transform: translateX(100%); }
+  .btn:active { transform: translateY(-1px) scale(0.99); }
+
+  .btn .icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: rgba(180, 140, 255, 0.14);
+    font-size: 19px;
+  }
+
+  .btn .meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .btn .name { font-weight: 600; font-size: 15px; }
+  .btn .handle { font-size: 12px; color: var(--muted); }
+
+  .btn .arrow {
+    margin-left: auto;
+    color: var(--accent-soft);
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  /* подвал */
+  .footer {
+    margin-top: 26px;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.7;
+  }
+  .footer .dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #7ee787;
+    box-shadow: 0 0 8px #7ee787;
+    margin-right: 6px;
+    vertical-align: middle;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+  }
+
+  /* появление при загрузке */
+  .fade {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: appear 0.6s ease forwards;
+  }
+  @keyframes appear {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .d1 { animation-delay: 0.05s; }
+  .d2 { animation-delay: 0.15s; }
+  .d3 { animation-delay: 0.25s; }
+  .d4 { animation-delay: 0.35s; }
+  .d5 { animation-delay: 0.45s; }
+  .d6 { animation-delay: 0.55s; }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="avatar fade d1">u</div>
+
+    <h1 class="nick fade d2">uglywood</h1>
+    <p class="tag fade d2">digital forest · тихий уголок интернета</p>
+
+    <div class="chips fade d3">
+      <span class="chip">🌙 night owl</span>
+      <span class="chip">🎧 lofi</span>
+      <span class="chip">🎮 gamer</span>
+      <span class="chip">✨ vibes</span>
+    </div>
+
+    <nav class="links">
+      <a class="btn fade d4" href="https://t.me/" target="_blank" rel="noopener">
+        <span class="icon">✈️</span>
+        <span class="meta">
+          <span class="name">Telegram</span>
+          <span class="handle">@uglywood</span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+
+      <a class="btn fade d4" href="https://discord.com/" target="_blank" rel="noopener">
+        <span class="icon">🎮</span>
+        <span class="meta">
+          <span class="name">Discord</span>
+          <span class="handle">uglywood</span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+
+      <a class="btn fade d5" href="https://github.com/" target="_blank" rel="noopener">
+        <span class="icon">🐙</span>
+        <span class="meta">
+          <span class="name">GitHub</span>
+          <span class="handle">github.com/uglywood</span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+
+      <a class="btn fade d5" href="https://open.spotify.com/" target="_blank" rel="noopener">
+        <span class="icon">🎵</span>
+        <span class="meta">
+          <span class="name">Spotify</span>
+          <span class="handle">плейлисты для ночи</span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+
+      <a class="btn fade d6" href="https://www.youtube.com/" target="_blank" rel="noopener">
+        <span class="icon">▶️</span>
+        <span class="meta">
+          <span class="name">YouTube</span>
+          <span class="handle">видео и стримы</span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+    </nav>
+
+    <p class="footer fade d6">
+      <span class="dot"></span>на связи почти всегда<br>
+      сделано с фиолетовым настроением 💜
+    </p>
+  </main>
+</body>
+</html>
